@@ -2,7 +2,7 @@ const fs = require('fs/promises')
 const createFiles = require('./createFiles')
 const resolveRoot = require('../helpers/resolveRoot')
 
-module.exports = async (layer, componentName) => {
+module.exports = async (layer, componentName, requiredFiles) => {
   const componentUpperName = componentName[0].toUpperCase() + componentName.slice(1)
 
   try {
@@ -11,7 +11,7 @@ module.exports = async (layer, componentName) => {
     console.log(`Не удалось создать директорию для компонента ${componentUpperName}`)
   }
 
-  await createFiles(layer, componentUpperName)
+  await createFiles(layer, componentUpperName, requiredFiles)
 }
 
 

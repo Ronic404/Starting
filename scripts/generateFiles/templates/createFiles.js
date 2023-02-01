@@ -5,7 +5,7 @@ const storyTemplate = require('./storyTemplate')
 const styleTemplate = require('./styleTemplate')
 const publicApiTemplate = require('./publicApiTemplate')
 
-module.exports = async (layer, componentName) => {
+module.exports = async (layer, componentName, requiredFiles) => {
   const createComponent = async () => {
     try {
       await fs.writeFile(
@@ -13,15 +13,19 @@ module.exports = async (layer, componentName) => {
         componentTemplate(componentName),
       )
 
-      await fs.writeFile(
-        resolveRoot('src', layer, componentName, `${componentName}.stories.jsx`),
-        storyTemplate(layer, componentName),
-      )
+      if (requiredFiles.storybook) {
+          await fs.writeFile(
+            resolveRoot('src', layer, componentName, `${componentName}.stories.jsx`),
+            storyTemplate(layer, componentName),
+          )
+      }
 
-      await fs.writeFile(
-        resolveRoot('src', layer, componentName, `${componentName}.module.scss`),
-        styleTemplate(componentName),
-      )
+      if (requiredFiles.css) {
+          await fs.writeFile(
+            resolveRoot('src', layer, componentName, `${componentName}.module.scss`),
+            styleTemplate(componentName),
+          )
+      }
 
       await fs.writeFile(
         resolveRoot('src', layer, componentName, 'index.js'),

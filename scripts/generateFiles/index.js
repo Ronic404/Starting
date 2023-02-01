@@ -1,3 +1,4 @@
+const ask = require('./helpers/ask')
 const createTemplate = require('./templates/createTemplate')
 
 // Сегменты
@@ -14,7 +15,17 @@ if (!componentName) {
 	console.log('Укажите название компонента')
 }
 
-createTemplate(layer, componentName)
+const getRequiredFiles = async () => {
+    const files = {}
 
+    files.css = await ask('Нужен ли вам css-файл (y или n) > ');
+    files.storybook = await ask('Нужен ли вам storybook-файл (y или n) > ');
 
+    return files
+};
+
+Promise.resolve(getRequiredFiles())
+    .then((requiredFiles) => {
+        createTemplate(layer, componentName, requiredFiles)
+    })
 
