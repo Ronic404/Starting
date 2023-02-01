@@ -1,4 +1,4 @@
-const createTemplate = require('./templates/createFolder')
+const createTemplate = require('./templates/createTemplate')
 
 // Сегменты
 const layer = process.argv[2] // получаем название слоя
